@@ -35,12 +35,13 @@ with st.sidebar:
 
     method = st.radio(
         "Özetleme Yöntemi",
-        options=["Abstractive (mT5)", "TextRank", "TF-IDF"],
+        options=["Abstractive (mT5)", "Özel Algoritma (Heuristic)", "TextRank", "TF-IDF"],
         index=0,
         help="Özet oluşturmak için kullanılacak algoritmayı seçin.",
     )
     method_map = {
         "Abstractive (mT5)": "abstractive",
+        "Özel Algoritma (Heuristic)": "custom",
         "TextRank": "textrank",
         "TF-IDF": "tfidf",
     }
@@ -65,6 +66,12 @@ with st.sidebar:
         "özet cümlelerini üretir**. İlk çalıştırmada model indirilir (~2 GB)."
     )
     st.info(
+        "**Özel Algoritma (Heuristic):** Tamamen kendimizin geliştirdiği, hiçbir "
+        "ML kütüphanesi kullanmayan sezgisel skorlama algoritmasıdır. "
+        "Cümleleri 5 farklı kriterle (konum, başlık örtüşmesi, sayısal veri, "
+        "anahtar kelime yoğunluğu, uzunluk) puanlayarak en önemli cümleleri seçer."
+    )
+    st.info(
         "**TextRank:** Cümleler arası benzerlik grafi kurar ve PageRank "
         "algoritmasıyla en merkezi cümleleri seçer. Bağlam bütünlüğünü "
         "iyi korur."
@@ -84,9 +91,9 @@ def cached_fetch(url: str) -> dict:
 
 
 @st.cache_data(show_spinner=False)
-def cached_summarize(text: str, n: int, method: str) -> dict:
+def cached_summarize(text: str, n: int, method: str, title: str = "") -> dict:
     """Aynı metin/parametre kombinasyonu için sonucu önbelleğe alır."""
-    return summarize(text, n=n, method=method)
+    return summarize(text, n=n, method=method, title=title)
 
 
 # ── Ana Alan ───────────────────────────────────────────────────────
@@ -116,7 +123,8 @@ if summarize_btn:
                     else "Özetleniyor..."
                 ):
                     result = cached_summarize(
-                        article["text"], n_sentences, method_key
+                        article["text"], n_sentences, method_key,
+                        title=article["title"],
                     )
 
                 if result["error"]:

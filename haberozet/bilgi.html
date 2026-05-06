@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Özel Algoritma Bilgi Sayfası — HaberÖzet</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --bg: #0f1117;
+            --surface: #1a1c25;
+            --surface-2: #22252f;
+            --border: #2e3140;
+            --text: #e4e6ed;
+            --text-muted: #9ca0b0;
+            --accent: #6c63ff;
+            --accent-light: #8b83ff;
+            --green: #2ecc71;
+            --orange: #f39c12;
+            --red: #e74c3c;
+            --blue: #3498db;
+            --cyan: #00cec9;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 3rem 0 2rem;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 3rem;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: .5rem;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 2.5rem 0 1rem;
+            color: var(--accent-light);
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+        }
+
+        h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin: 1.5rem 0 .75rem;
+            color: var(--text);
+        }
+
+        p, li { color: var(--text-muted); font-size: .95rem; }
+        p { margin-bottom: 1rem; }
+        ul { padding-left: 1.5rem; margin-bottom: 1rem; }
+        li { margin-bottom: .4rem; }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: border-color .2s;
+        }
+
+        .card:hover { border-color: var(--accent); }
+
+        .card-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--text);
+            margin-bottom: .5rem;
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: .75rem;
+            font-weight: 600;
+        }
+
+        .badge-green  { background: rgba(46,204,113,.15); color: var(--green); }
+        .badge-orange { background: rgba(243,156,18,.15); color: var(--orange); }
+        .badge-blue   { background: rgba(52,152,219,.15); color: var(--blue); }
+        .badge-cyan   { background: rgba(0,206,201,.15);  color: var(--cyan); }
+        .badge-red    { background: rgba(231,76,60,.15);   color: var(--red); }
+
+        .formula-box {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1.2rem;
+            font-family: 'Courier New', monospace;
+            font-size: .9rem;
+            color: var(--cyan);
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0 1.5rem;
+            font-size: .9rem;
+        }
+
+        th, td {
+            padding: .75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: var(--surface-2);
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        td { color: var(--text-muted); }
+
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: .5rem;
+            margin: 2rem 0;
+        }
+
+        .flow-step {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: .75rem 1.2rem;
+            text-align: center;
+            font-size: .85rem;
+            font-weight: 600;
+            color: var(--text);
+            min-width: 120px;
+        }
+
+        .flow-arrow {
+            font-size: 1.4rem;
+            color: var(--accent);
+        }
+
+        .highlight {
+            background: rgba(108,99,255,.1);
+            border-left: 3px solid var(--accent);
+            padding: 1rem 1.2rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+
+        .highlight p { margin-bottom: 0; color: var(--text); }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: .85rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <header>
+        <h1>🧠 Özel Çoklu-Kriter Sezgisel Skorlama Algoritması</h1>
+        <p>HaberÖzet projesi için sıfırdan geliştirilen, makine öğrenmesi kütüphanesi kullanmayan extractive özetleme algoritması.</p>
+    </header>
+
+    <!-- ───────────────── GİRİŞ ───────────────── -->
+    <h2>📌 Genel Bakış</h2>
+    <p>
+        Bu algoritma, haber metinlerinin doğasına özel olarak tasarlanmıştır. Herhangi bir harici
+        makine öğrenmesi kütüphanesi (scikit-learn, networkx vb.) kullanmadan, yalnızca Python'un
+        yerleşik yetenekleriyle çalışır. Her cümleye <strong>5 farklı kritere</strong> dayalı bir
+        <strong>önem puanı</strong> atar ve en yüksek puanlı cümleleri seçerek özet oluşturur.
+    </p>
+
+    <div class="highlight">
+        <p><strong>Temel Felsefe:</strong> Haber yazımında gazeteciler "ters piramit" kuralı, başlıkta ana fikri verme ve sayısal verilerle destekleme gibi kalıplara uyar. Algoritmamız bu kalıpları matematiksel kurallara dönüştürerek en önemli cümleleri tespit eder.</p>
+    </div>
+
+    <!-- ───────────────── AKIŞ ───────────────── -->
+    <h2>⚙️ Çalışma Akışı</h2>
+    <div class="flow-diagram">
+        <div class="flow-step">📥 Metin Girişi</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">✂️ Cümlelere Ayırma</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">🧹 Ön İşleme</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">🔢 5 Kriter ile Puanlama</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">🏆 Sıralama &amp; Seçim</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">📄 Özet Çıktısı</div>
+    </div>
+
+    <!-- ───────────────── 5 KRİTER ───────────────── -->
+    <h2>📊 5 Skorlama Kriteri</h2>
+    <p>Her cümle aşağıdaki 5 kriter üzerinden ayrı ayrı puanlanır. Her kriter 0.0 – 1.0 arasında bir değer üretir. Sonuçlar ağırlıklı ortalama ile birleştirilir.</p>
+
+    <!-- Kriter 1 -->
+    <div class="card">
+        <div class="card-title">1️⃣ Konum Skoru (Position Score) <span class="badge badge-green">Ağırlık: %25</span></div>
+        <p>
+            Gazetecilikte <strong>"Ters Piramit"</strong> kuralı geçerlidir: en kritik bilgiler haberin
+            ilk paragrafında verilir, detaylar sona bırakılır. Bu kriter, cümlenin metin içindeki
+            konumuna göre puan verir.
+        </p>
+        <table>
+            <tr><th>Konum</th><th>Puan</th><th>Gerekçe</th></tr>
+            <tr><td>İlk %20'lik dilim</td><td>1.0</td><td>En önemli bilgiler burada yer alır</td></tr>
+            <tr><td>Son cümle</td><td>0.6</td><td>Toparlama / sonuç cümlesi</td></tr>
+            <tr><td>Orta bölge</td><td>0.2 – 0.5</td><td>Doğrusal azalma ile detay cümleleri</td></tr>
+        </table>
+        <div class="formula-box">
+            relative = index / (total - 1)<br>
+            if relative ≤ 0.2 → 1.0<br>
+            if son cümle     → 0.6<br>
+            else             → max(0.2, 0.5 - (relative - 0.2) × 0.5)
+        </div>
+    </div>
+
+    <!-- Kriter 2 -->
+    <div class="card">
+        <div class="card-title">2️⃣ Başlık Örtüşmesi (Title Overlap) <span class="badge badge-orange">Ağırlık: %25</span></div>
+        <p>
+            Haber başlığı, o haberin <strong>ana fikrini</strong> yansıtır. Başlıkta geçen anlamlı kelimelerle (stop-words hariç) örtüşen cümleler daha değerlidir.
+        </p>
+        <div class="formula-box">
+            başlık_kelimeleri = {başlıktaki anlamlı kelimeler}<br>
+            örtüşme = cümledeki_başlık_kelimeleri_sayısı / toplam_başlık_kelimesi<br>
+            skor = min(1.0, örtüşme)
+        </div>
+        <p><strong>Örnek:</strong> Başlık: <em>"Merkez Bankası Faiz Kararı Açıklandı"</em> → Bir cümlede "Merkez", "Bankası" ve "Faiz" geçiyorsa örtüşme skoru yüksek olur.</p>
+    </div>
+
+    <!-- Kriter 3 -->
+    <div class="card">
+        <div class="card-title">3️⃣ Sayısal Veri Bonusu (Numerical Score) <span class="badge badge-blue">Ağırlık: %10</span></div>
+        <p>
+            Haberlerdeki istatistikler, yüzdeler, tarihler ve para miktarları <strong>kritik bilgi</strong> taşır.
+            Bu cümlelere ek puan verilir.
+        </p>
+        <p>Algılanan göstergeler:</p>
+        <ul>
+            <li>Rakamlar (herhangi bir sayı)</li>
+            <li>Yüzde ifadeleri (%12, 45% gibi)</li>
+            <li>Para birimi sembolleri (₺, $, €, £)</li>
+            <li>Büyüklük kelimeleri (milyon, milyar, trilyon, bin)</li>
+            <li>Tarih formatları (01.05.2026 gibi)</li>
+        </ul>
+        <div class="formula-box">
+            gösterge_sayısı ≥ 3 → 0.5 (yüksek veri yoğunluğu)<br>
+            gösterge_sayısı ≥ 1 → 0.3 (orta veri yoğunluğu)<br>
+            gösterge_sayısı = 0 → 0.0 (sayısal veri yok)
+        </div>
+    </div>
+
+    <!-- Kriter 4 -->
+    <div class="card">
+        <div class="card-title">4️⃣ Anahtar Kelime Yoğunluğu (Keyword Density) <span class="badge badge-cyan">Ağırlık: %30</span></div>
+        <p>
+            Metin genelinde en sık tekrarlanan anlamlı kelimeler (stop-words hariç), metnin ana konularını yansıtır.
+            Bu kriterde <strong>kendi Term Frequency (TF) hesaplamamız</strong> sıfırdan yazılmıştır.
+        </p>
+        <h3>Adımlar:</h3>
+        <ul>
+            <li>Tüm metindeki kelimeler sayılır (stop-words ve 3 harften kısa kelimeler hariç).</li>
+            <li>En sık geçen 15 kelime seçilir.</li>
+            <li>Frekanslar, en yüksek frekansa bölünerek 0.0 – 1.0 arasına normalize edilir.</li>
+            <li>Cümledeki kelimelerin normalize frekans toplamı, cümle uzunluğuna bölünerek skor hesaplanır.</li>
+        </ul>
+        <div class="formula-box">
+            normalize_frekans[kelime] = frekans[kelime] / max_frekans<br>
+            ham_skor = Σ normalize_frekans(kelime) for kelime in cümle<br>
+            skor = min(1.0, ham_skor / cümle_uzunluğu)
+        </div>
+    </div>
+
+    <!-- Kriter 5 -->
+    <div class="card">
+        <div class="card-title">5️⃣ Uzunluk Cezası (Length Penalty) <span class="badge badge-red">Ağırlık: %10</span></div>
+        <p>
+            Çok kısa cümleler anlamsız olabilir (<em>"Dedi."</em>), çok uzun cümleler ise özeti bozar. Bu kriter
+            ideal uzunluk aralığındaki cümleleri ödüllendirir.
+        </p>
+        <table>
+            <tr><th>Kelime Sayısı</th><th>Çarpan</th><th>Değerlendirme</th></tr>
+            <tr><td>&lt; 5</td><td>0.1</td><td>Çok kısa — neredeyse ele</td></tr>
+            <tr><td>5 – 7</td><td>0.6</td><td>Kısa — düşük puan</td></tr>
+            <tr><td>8 – 30</td><td>1.0</td><td>İdeal aralık — tam puan</td></tr>
+            <tr><td>31 – 40</td><td>0.7</td><td>Biraz uzun — hafif ceza</td></tr>
+            <tr><td>&gt; 40</td><td>0.4</td><td>Çok uzun — ağır ceza</td></tr>
+        </table>
+    </div>
+
+    <!-- ───────────────── FORMÜL ───────────────── -->
+    <h2>🔢 Nihai Puanlama Formülü</h2>
+    <p>Her cümlenin toplam puanı, 5 kriter skorunun ağırlıklı toplamı olarak hesaplanır:</p>
+    <div class="formula-box">
+        Toplam_Puan = 0.25 × Konum + 0.25 × Başlık + 0.10 × Sayısal + 0.30 × AnahtarKelime + 0.10 × Uzunluk
+    </div>
+    <p>Hesaplama sonrası en yüksek puanlı <strong>n</strong> cümle seçilir ve <strong>orijinal metindeki sırası korunarak</strong> özet oluşturulur.</p>
+
+    <!-- ───────────────── KARŞILAŞTIRMA ───────────────── -->
+    <h2>🆚 Diğer Yöntemlerle Karşılaştırma</h2>
+    <table>
+        <tr>
+            <th>Özellik</th>
+            <th>Özel Algoritma</th>
+            <th>TF-IDF</th>
+            <th>TextRank</th>
+        </tr>
+        <tr>
+            <td>Harici ML kütüphanesi</td>
+            <td><strong>Yok ✅</strong></td>
+            <td>scikit-learn</td>
+            <td>scikit-learn + networkx</td>
+        </tr>
+        <tr>
+            <td>Başlık bilgisini kullanır</td>
+            <td><strong>Evet ✅</strong></td>
+            <td>Hayır</td>
+            <td>Hayır</td>
+        </tr>
+        <tr>
+            <td>Cümle konumu dikkate alınır</td>
+            <td><strong>Evet ✅</strong></td>
+            <td>Hayır</td>
+            <td>Hayır</td>
+        </tr>
+        <tr>
+            <td>Sayısal veri farkındalığı</td>
+            <td><strong>Evet ✅</strong></td>
+            <td>Hayır</td>
+            <td>Hayır</td>
+        </tr>
+        <tr>
+            <td>Cümle uzunluğu kontrolü</td>
+            <td><strong>Evet ✅</strong></td>
+            <td>Hayır</td>
+            <td>Hayır</td>
+        </tr>
+        <tr>
+            <td>Yaklaşım</td>
+            <td>Çoklu-kriter sezgisel</td>
+            <td>İstatistiksel (terim frekans)</td>
+            <td>Graf tabanlı (PageRank)</td>
+        </tr>
+    </table>
+
+    <!-- ───────────────── AVANTAJLAR ───────────────── -->
+    <h2>✅ Avantajları</h2>
+    <ul>
+        <li><strong>Bağımsızlık:</strong> Hiçbir harici ML kütüphanesine ihtiyaç duymaz, saf Python ile çalışır.</li>
+        <li><strong>Hız:</strong> Matris çarpımı veya graf algoritması gerektirmediği için çok hızlıdır.</li>
+        <li><strong>Haber odaklı:</strong> Ters piramit kuralı ve başlık örtüşmesi gibi gazetecilik ilkelerine dayanır.</li>
+        <li><strong>Şeffaflık:</strong> Her kriterin puanı ayrı ayrı incelenebilir; kara kutu değildir.</li>
+        <li><strong>Esneklik:</strong> Ağırlıklar ve eşik değerleri kolayca ayarlanabilir.</li>
+    </ul>
+
+    <footer>
+        📰 HaberÖzet — Özel Çoklu-Kriter Sezgisel Skorlama Algoritması Dokümantasyonu
+    </footer>
+</div>
+</body>
+</html>

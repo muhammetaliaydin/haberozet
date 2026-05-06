@@ -26,17 +26,35 @@ _NOISE_PATTERNS: list[re.Pattern] = [
     re.compile(r"^Unvan\s*[,:]", re.IGNORECASE),
     # "Okuma süresi 7 dk"
     re.compile(r"^Okuma\s+süresi\s+\d+", re.IGNORECASE),
-    # Sade tarih satırları: "25 Şubat 2026", "3 Mart 2025" vb.
+    # Tarih satırları: "5 Mayıs 2026", "5 Mayıs 2026 Güncelleme 7 saat önce" vb.
     re.compile(
         r"^\d{1,2}\s+"
         r"(Ocak|Şubat|Mart|Nisan|Mayıs|Haziran|Temmuz|Ağustos|Eylül|Ekim|Kasım|Aralık)"
-        r"\s+\d{4}$",
+        r"\s+\d{4}",
         re.IGNORECASE,
     ),
+    # Göreli zaman damgaları: "7 saat önce", "3 dakika önce", "2 gün önce"
+    re.compile(r"^\d+\s+(saniye|dakika|saat|gün|hafta|ay)\s+önce$", re.IGNORECASE),
+    # "Güncelleme …" ile başlayan satırlar
+    re.compile(r"^Güncelleme\s+", re.IGNORECASE),
+    # Yayınlanma / güncelleme tarihi: "Yayınlanma tarihi 5 Mayıs 2026"
+    re.compile(r"^(Yayınlanma|Güncellenme|Son\s+güncelleme)\s*(tarihi)?\s*[,:]?\s*\d", re.IGNORECASE),
+    # DD.MM.YYYY veya DD/MM/YYYY formatında tek başına tarih satırları
+    re.compile(r"^\d{1,2}[./]\d{1,2}[./]\d{2,4}\s*$"),
     # "Getty Images", "Reuters", "AFP" gibi tek başına kaynak isimleri
     re.compile(r"^(Getty\s*Images|Reuters|AFP|AP|AA|İHA|DHA)\s*$", re.IGNORECASE),
     # "BBC …" tek başına kaynak satırı
     re.compile(r"^BBC\s+\w+$", re.IGNORECASE),
+    # Yazar / muhabir satırları: "Muhabir: …", "Editör: …", "Hazırlayan: …"
+    re.compile(r"^(Muhabir|Editör|Hazırlayan|Haber\s*Merkezi)\s*[,:]", re.IGNORECASE),
+    # Sosyal paylaşım metinleri
+    re.compile(r"^(Paylaş|Tweetle|WhatsApp|Facebook|Twitter|Kopyala)\s*$", re.IGNORECASE),
+    # Video / ses süresi: "Videonun süresi, 1,30", "Video, 02:45"
+    re.compile(r"^Video(nun)?\s*(süresi)?\s*[,:]\s*\d", re.IGNORECASE),
+    # "İlgili Konular", "İlgili Haberler" başlıkları
+    re.compile(r"^İlgili\s+(Konular|Haberler|İçerikler)\s*$", re.IGNORECASE),
+    # Telif / copyright satırları
+    re.compile(r"^(©|Copyright|Tüm\s+hakları)", re.IGNORECASE),
 ]
 
 
